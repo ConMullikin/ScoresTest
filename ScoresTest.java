@@ -51,9 +51,9 @@ public class ScoresTest {
      */
 
     @Test public void emptyMax() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+        assertThrows(NoSuchElementException.class, () -> {
             ScoreZ scores = new ScoreZ("");
-            scores.get(0);
+            scores.getMax();
         });
     }
 
