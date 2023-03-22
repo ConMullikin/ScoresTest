@@ -29,6 +29,29 @@ public class ScoresTest {
         assertEquals(-32,scores.get(3));
     }
 
+    @Test public void ctorTestStringLit() {
+        String numbers3 = "45 10 23 iffy 12 73";
+        assertThrows(InputMismatchException.class, () -> {
+            ScoreZ newScores = new ScoreZ(numbers3);
+        });
+    }
+
+    @Test public void ctorTestChars() {
+        String numbers5 = "83 76& 03, 6^3";
+        assertThrows(InputMismatchException.class, () -> {
+            ScoreZ newScores = new ScoreZ(numbers5);
+        });
+    }
+
+    @Test public void ctorTestNewlines() {
+        String numbers7 = "54 82 43 21 \n" +
+                "76 33 26 90 \n" +
+                "45 89 01 1";
+
+        ScoreZ newScores = new ScoreZ(numbers7);
+        assertEquals(12, newScores.getNumScores());
+    }
+
     @Test public void nullScores() {
         assertThrows(NullPointerException.class, () -> {
             ScoreZ scores = new ScoreZ(null);
@@ -45,12 +68,20 @@ public class ScoresTest {
         ScoreZ scores = new ScoreZ("2 4 16 32");
         assertEquals(32,scores.get(3));
     }
+
+    @Test public void getTestOOB() {
+        String numbers9 = "0 1 2 3 4";
+        ScoreZ newScores = new ScoreZ(numbers9);
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            int indexValue = newScores.get(7);
+        });
+    }
     
     /*
      * getMax() tests
      */
 
-    @Test public void emptyMax() {
+    @Test public void emptyMax() {   //Throws IndexOutOfBoundException; want NoSuchElementException
         assertThrows(NoSuchElementException.class, () -> {
             ScoreZ scores = new ScoreZ("");
             scores.getMax();
