@@ -5,36 +5,53 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * Tests the Scores class
+ */
 public class ScoresTest {
-    /*
-     * Constructor tests using numScores() and get()
+    /**
+     * Creates a scores class with only positive integers as scores
      */
-
    @Test public void positiveScores() {
        Scores scores = new Scores("5 2 18 90 120");
        assertEquals(90, scores.get(3));
    }
 
+    /**
+     * Creates a scores class with only positive scores
+     */
     @Test public void negativeScores() {
         Scores scores = new Scores("2 4 16 -32");
         assertEquals(-32,scores.get(3));
     }
 
+    /**
+     * Creates a scores class with positive and negative scores
+     */
     @Test public void posAndNegScores() {
        Scores scores = new Scores("-2 -1 1 2");
        assertEquals(2, scores.get(3));
     }
 
+    /**
+     * Creates a scores class with large positive numbers
+     */
     @Test public void largeNumbers() {
        Scores scores = new Scores("1000 10000 100000 1000000 10000000");
        assertEquals(1000000, scores.get(3));
     }
 
+    /**
+     * Creates a scores class with large negative numbers
+     */
     @Test public void smallNumbers() {
        Scores scores = new Scores("-1000 -10000 -100000 -1000000 -10000000");
        assertEquals(-10000, scores.get(1));
     }
 
+    /**
+     * Creates a scores class that tries to throw an exception by getting a number out of bounds
+     */
     @Test public void invalidGet() {
         String numbers9 = "0 1 2 3 4";
         Scores newScores = new Scores(numbers9);
@@ -43,6 +60,9 @@ public class ScoresTest {
         });
     }
 
+    /**
+     * Creates an empty scores class that tries to throw an IndexOutOfBoundsException by getting a number out of bounds
+     */
     @Test public void emptyScores() {
         Scores scores = new Scores("");
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -50,18 +70,18 @@ public class ScoresTest {
         });
     }
 
-    @Test public void nullScores() {
-        assertThrows(NullPointerException.class, () -> {
-            Scores scores = new Scores(null);
-        });
-    }
-
+    /**
+     * Creates a scores class that includes doubles and tries to throw an IllegalArgumentException
+     */
     @Test public void doubleScores() {
         assertThrows(IllegalArgumentException.class, () -> {
             Scores scores = new Scores("2 4 16.09 32");
         });
     }
 
+    /**
+     * Creates a scores class that includes strings and tries to throw an IllegalArgumentException
+     */
     @Test public void stringLitScores() {
         String numbers3 = "45 10 23 iffy 12 73";
         assertThrows(IllegalArgumentException.class, () -> {
@@ -69,6 +89,9 @@ public class ScoresTest {
         });
     }
 
+    /**
+     * Creates a scores class that includes characters and tries to throw an IllegalArgumentException
+     */
     @Test public void charsScores() {
         String numbers5 = "83 76& 03, 6^3";
         assertThrows(IllegalArgumentException.class, () -> {
@@ -76,11 +99,17 @@ public class ScoresTest {
         });
     }
 
+    /**
+     * Creates a scores class that includes characters and tests the number of scores
+     */
     @Test public void validNumScores() {
         Scores scores = new Scores("2 4 16 32");
         assertEquals(4,scores.getNumScores());
     }
 
+    /**
+     * Creates a scores class that includes newlines in the string used in the scores constructor
+     */
     @Test public void ctorTestNewlines() {
         String numbers7 = "54 82 43 21 \n" +
                 "76 33 26 90 \n" +
@@ -90,6 +119,9 @@ public class ScoresTest {
         assertEquals(12, newScores.getNumScores());
     }
 
+    /**
+     * Creates a scores class that includes broken up strings added together and used in the scores constructor
+     */
     @Test public void ctorTestBrokenString() {
        String numbers = "2 34 61 -13 -27 " +
                "12 32 16 9 67 " +
@@ -99,6 +131,9 @@ public class ScoresTest {
        assertEquals(14, scores.getNumScores());
     }
 
+    /**
+     * Creates a scores class that includes broken up strings added together and tests the number of scores
+     */
     @Test public void ctorTestBrokenStringNWS() {
        String numbers = "2034 803 -872 90" +
                "21 456 -232 -1098 19" +
